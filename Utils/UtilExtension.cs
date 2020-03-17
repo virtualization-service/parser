@@ -1,7 +1,7 @@
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace mapper.Util
+namespace Parser.Util
 {
     public static class UtilExtensions
     {

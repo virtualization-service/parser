@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using mapper.Model;
-using mapper.Util;
 using Newtonsoft.Json.Linq;
+using Parser.Model;
 
-namespace mapper.Processors
+namespace Parser.Processors
 {
     public class FlattenedJsonStructure : IFlattened<JToken>
     {

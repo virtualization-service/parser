@@ -1,4 +1,4 @@
-namespace mapper.Model
+namespace Parser.Model
 {
     public class ElementStructure
     {
