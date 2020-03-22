@@ -26,6 +26,8 @@ namespace Parser.Processors
             var body = message.Body;
             var extactedMessage = Encoding.UTF8.GetString(body);
 
+            Console.WriteLine($"Received message with routing key {message.RoutingKey} exchange :{message.Exchange} & Body:{extactedMessage}")
+
             var  dataObject =  JsonConvert.DeserializeObject<MessageDto>(extactedMessage);
 
             dataObject.operation = GetServiceIdentifier(dataObject);
