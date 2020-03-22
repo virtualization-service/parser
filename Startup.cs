@@ -42,7 +42,7 @@ namespace Parser
             var life =  app.ApplicationServices.GetService<Microsoft.Extensions.Hosting.IHostApplicationLifetime>();
             life.ApplicationStarted.Register(GetOnStarted(factory, processors));
             life.ApplicationStopping.Register(GetOnStopped(factory, processors));
-
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

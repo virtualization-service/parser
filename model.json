@@ -1,0 +1,13 @@
+{
+    "service": "http://wsf.cdyne.com/WeatherWS/Weather.asmx",
+    "request":{
+        "raw_data":"<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"><soap12:Body>  <GetCityForecastByZIP xmlns=\"http://ws.cdyne.com/WeatherWS/\">    <ZIP>string</ZIP>  </GetCityForecastByZIP></soap12:Body></soap12:Envelope>",
+        "headers":{
+            "soapaction": "GetWeatherByZip"
+        }
+    },
+    "response":{
+        "raw_data":"<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>  <GetCityForecastByZIPResponse xmlns=\"http://ws.cdyne.com/WeatherWS/\">    <GetCityForecastByZIPResult>      <Success>boolean</Success>      <ResponseText>string</ResponseText>      <State>string</State>      <City>string</City>      <WeatherStationCity>string</WeatherStationCity>      <ForecastResult>        <Forecast>          <Date>dateTime</Date>          <WeatherID>short</WeatherID>          <Desciption>string</Desciption>          <Temperatures xsi:nil=\"true\" />          <ProbabilityOfPrecipiation xsi:nil=\"true\" />        </Forecast>        <Forecast>          <Date>dateTime</Date>          <WeatherID>short</WeatherID>          <Desciption>string</Desciption>          <Temperatures xsi:nil=\"true\" />          <ProbabilityOfPrecipiation xsi:nil=\"true\" />        </Forecast>      </ForecastResult>    </GetCityForecastByZIPResult>  </GetCityForecastByZIPResponse></soap:Body></soap:Envelope>",
+        "headers":{}
+    }
+}
