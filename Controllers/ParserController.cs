@@ -19,6 +19,12 @@ namespace Parser.Controllers
         {
             _logger = logger;
         }
+        
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return Ok("Success");
+        }
 
         [HttpPost]
         public ActionResult POST([FromBody] MessageDto message, [FromServices] MessageExtractor extractor)
