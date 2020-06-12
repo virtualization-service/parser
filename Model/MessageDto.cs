@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Parser.Model
 {
     public class MessageDto
     {
-        public Uri service;
+        public Uri service{ get; set;}
 
-        public string operation;
+        public string service1{ get; set;}
 
-        public Body request;
+        public string operation{ get; set;}
 
-        public Body response;
+        public Body request{ get; set;}
 
+        public Body response{ get; set;}
+
+        [JsonIgnore]
         public string service_component
         {
             get
@@ -25,10 +29,10 @@ namespace Parser.Model
 
     public class Body
     {
-        public Dictionary<string,string[]> formatted_data;
-        public Dictionary<string,string> headers;
+        public Dictionary<string,string[]> formatted_data{ get; set;}
+        public Dictionary<string,string> headers{ get; set;}
 
-        public string raw_data;
+        public string raw_data{ get; set;}
 
     }
 }
