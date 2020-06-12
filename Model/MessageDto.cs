@@ -8,8 +8,6 @@ namespace Parser.Model
     {
         public Uri service{ get; set;}
 
-        public string service1{ get; set;}
-
         public string operation{ get; set;}
 
         public Body request{ get; set;}
