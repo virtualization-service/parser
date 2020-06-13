@@ -13,6 +13,7 @@ namespace Parser.Model
 
         public Body response;
 
+        [JsonIgnore]
         public string service_component
         {
             get
