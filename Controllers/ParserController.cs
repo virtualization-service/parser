@@ -6,6 +6,7 @@ using Parser.Model;
 using Parser.Processors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace Parser.Controllers
 {
@@ -19,12 +20,19 @@ namespace Parser.Controllers
         {
             _logger = logger;
         }
+        
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return Ok("Success");
+        }
 
         [HttpPost]
         public ActionResult POST([FromBody] MessageDto message, [FromServices] MessageExtractor extractor)
         {
             message.operation = extractor.GetServiceIdentifier(message);
             message.request.formatted_data =  extractor.AddHeadersToDictionary(extractor.ElementStructure(message?.request?.raw_data), message.request.headers);
+            message.response.formatted_data =  extractor.AddHeadersToDictionary(extractor.ElementStructure(message?.response?.raw_data), message.response.headers);
 
             return Ok(message);
         }

@@ -1,10 +1,10 @@
 using System;
 using Parser.Processors;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using Steeltoe.CloudFoundry.Connector.RabbitMQ;
 
@@ -22,7 +22,7 @@ namespace Parser
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
             services.AddSingleton<PublishMessage>();
             services.AddSingleton<MessageConsumer>();
             services.AddSingleton<MessageExtractor>();
@@ -33,7 +33,7 @@ namespace Parser
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ConnectionFactory factory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ConnectionFactory factory)
         {
             if (env.IsDevelopment())
             {
@@ -41,10 +41,17 @@ namespace Parser
             }
 
             var processors = app.ApplicationServices.GetService<MessageConsumer>();
-            var life =  app.ApplicationServices.GetService<IApplicationLifetime>();
+            var life =  app.ApplicationServices.GetService<IHostApplicationLifetime>();
             life.ApplicationStarted.Register(GetOnStarted(factory, processors));
             life.ApplicationStopping.Register(GetOnStopped(factory, processors));
-            app.UseMvc();
+            app.UseRouting();
+
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private static Action GetOnStarted(ConnectionFactory factory, MessageConsumer processors)
