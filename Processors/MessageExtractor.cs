@@ -9,15 +9,18 @@ using System;
 using System.Collections.Generic;
 using Parser.Util;
 using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Parser.Processors
 {
     public class MessageExtractor
     {
         PublishMessage _publisher;
+        ILogger<MessageExtractor> _logger;
 
-        public MessageExtractor(PublishMessage publisher)
+        public MessageExtractor(PublishMessage publisher, ILogger<MessageExtractor> logger)
         {
+            _logger=logger;
             _publisher = publisher;
         }
 
@@ -26,7 +29,7 @@ namespace Parser.Processors
             var body = message.Body;
             var extactedMessage = Encoding.UTF8.GetString(body);
 
-            Console.WriteLine($"Received message with routing key {message.RoutingKey} exchange :{message.Exchange} & Body:{extactedMessage}");
+            _logger.LogInformation($"Received message with routing key {message.RoutingKey} exchange :{message.Exchange} & Body:{extactedMessage}");
 
             var  dataObject =  JsonConvert.DeserializeObject<MessageDto>(extactedMessage);
 

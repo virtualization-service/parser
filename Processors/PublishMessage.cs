@@ -1,13 +1,17 @@
 using System;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace Parser.Processors
 {
     public class PublishMessage
     {
-        public PublishMessage()
+        ILogger<PublishMessage> _logger;
+        
+        public PublishMessage(ILogger<PublishMessage> logger)
         {
+            _logger=logger;
 
         }
 
@@ -18,6 +22,7 @@ namespace Parser.Processors
 
         private void PublishSingleMessage(string message, ConnectionFactory _factory, string exchange, IBasicProperties properties)
         {
+            _logger.LogInformation($"Publishing message with routing key parser.completed exchange :{exchange} & Body:{message}");
             using (var connection = _factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
