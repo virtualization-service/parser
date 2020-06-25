@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Parser.Util;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Logging;
+using System.Web;
 
 namespace Parser.Processors
 {
@@ -35,7 +36,8 @@ namespace Parser.Processors
 
             dataObject.operation = GetServiceIdentifier(dataObject);
 
-            dataObject.request.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.request?.raw_data), dataObject.request.headers);
+            dataObject.request.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.request?.raw_data), dataObject.request.headers) ;
+            AppendQueryParams(dataObject.request.formatted_data, dataObject.service);
             if(dataObject.response != null)  dataObject.response.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.response?.raw_data), dataObject.response.headers);
 
             _publisher.Publish(JsonConvert.SerializeObject(dataObject), connectionFactory, message.Exchange, message.BasicProperties);
@@ -105,6 +107,17 @@ namespace Parser.Processors
         {
         }
         return string.Empty;
+    }
+
+    public void AppendQueryParams(Dictionary<string,string[]> formattedData, Uri url)
+    {
+        
+        if(formattedData == null) formattedData = new Dictionary<string, string[]>();
+            var queries = HttpUtility.ParseQueryString(url.Query);
+            foreach(var query in queries)
+            {
+                formattedData.Add("queryString_" + query.ToString(),new[] {queries.Get(query.ToString()) } );
+            }
     }
     }
 }

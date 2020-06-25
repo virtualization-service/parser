@@ -27,7 +27,8 @@ namespace Parser
                     logging.ClearProviders();
                     logging.AddConsole();
                 })
-                .ConfigureAppConfiguration(hostBuilder=>{
+                .ConfigureAppConfiguration(hostBuilder =>
+                {
                     hostBuilder.AddJsonFile("appsettings.json");
                 });
     }

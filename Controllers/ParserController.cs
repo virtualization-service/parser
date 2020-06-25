@@ -32,6 +32,7 @@ namespace Parser.Controllers
         {
             message.operation = extractor.GetServiceIdentifier(message);
             message.request.formatted_data =  extractor.AddHeadersToDictionary(extractor.ElementStructure(message?.request?.raw_data), message.request.headers);
+            extractor.AppendQueryParams(message.request.formatted_data , message.service);
             message.response.formatted_data =  extractor.AddHeadersToDictionary(extractor.ElementStructure(message?.response?.raw_data), message.response.headers);
 
             return Ok(message);
