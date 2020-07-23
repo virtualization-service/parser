@@ -22,9 +22,14 @@ namespace Parser
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureAppConfiguration((buildContext, configBuilder)=>{
-                    configBuilder.AddEnvironmentVariables();
-                    configBuilder.AddJsonFile("appsettings.json");
+                 .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
+                .ConfigureAppConfiguration(hostBuilder =>
+                {
+                    hostBuilder.AddJsonFile("appsettings.json");
                 });
     }
 }

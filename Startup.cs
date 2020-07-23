@@ -22,12 +22,14 @@ namespace Parser
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddSingleton<PublishMessage>();
             services.AddSingleton<MessageConsumer>();
             services.AddSingleton<MessageExtractor>();
-            services.AddControllers().AddNewtonsoftJson();
 
             services.AddRabbitMQConnection(Configuration);
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,10 +41,13 @@ namespace Parser
             }
 
             var processors = app.ApplicationServices.GetService<MessageConsumer>();
-            var life =  app.ApplicationServices.GetService<Microsoft.Extensions.Hosting.IHostApplicationLifetime>();
+            var life =  app.ApplicationServices.GetService<IHostApplicationLifetime>();
             life.ApplicationStarted.Register(GetOnStarted(factory, processors));
             life.ApplicationStopping.Register(GetOnStopped(factory, processors));
             app.UseRouting();
+
+            //app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
