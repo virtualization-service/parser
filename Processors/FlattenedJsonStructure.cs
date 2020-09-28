@@ -15,15 +15,16 @@ namespace Parser.Processors
         {
             foreach (var jsonValue in json.Children())
             {
-                if(jsonValue.HasValues)
+                if (jsonValue.HasValues)
                     GetList(jsonValue);
-                else{
+                else
+                {
                     var jValue = jsonValue.Value<string>();
                     var path = jsonValue.Path;
-                    var foundElements = _elementsFound.Count(p=> p.Xpath == path);
+                    var foundElements = _elementsFound.Count(p => p.Xpath == path);
                     _elementsFound.Add(new ElementStructure(jValue, path, foundElements));
 
-                    _flattened.Add(path, new[] { jValue});
+                    _flattened.Add(path, new[] { jValue });
                 }
 
             }
@@ -31,4 +32,3 @@ namespace Parser.Processors
         }
     }
 }
-        

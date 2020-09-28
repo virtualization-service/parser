@@ -38,7 +38,7 @@ namespace Parser.Processors
 
             dataObject.request.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.request?.raw_data), dataObject.request.headers) ;
             AppendQueryParams(dataObject.request.formatted_data, dataObject.service);
-            if(dataObject.response != null)  dataObject.response.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.response?.raw_data), dataObject.response.headers);
+            //if(dataObject.response != null)  dataObject.response.formatted_data = AddHeadersToDictionary(ElementStructure(dataObject?.response?.raw_data), dataObject.response.headers);
 
             _publisher.Publish(JsonConvert.SerializeObject(dataObject), connectionFactory, message.Exchange, message.BasicProperties);
         }
