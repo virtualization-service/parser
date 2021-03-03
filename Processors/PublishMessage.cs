@@ -22,6 +22,11 @@ namespace Parser.Processors
 
         private void PublishSingleMessage(string message, ConnectionFactory _factory, string exchange, IBasicProperties properties)
         {
+            if( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RABBIT_MQ_URI") ))
+                _factory.Uri = new Uri(Environment.GetEnvironmentVariable("RABBIT_MQ_URI"));
+
+            Console.WriteLine($"Connection to RabbitMQ ${ _factory.Uri}");
+
             _logger.LogInformation($"Publishing message with routing key parser.completed exchange :{exchange} & Body:{message}");
             using (var connection = _factory.CreateConnection())
             using (var channel = connection.CreateModel())
