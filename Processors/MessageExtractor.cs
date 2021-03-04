@@ -90,6 +90,23 @@ namespace Parser.Processors
                 return message.service_component +"-" + message?.method;
                 
             }
+            
+            if(message.request?.headers?.Count > 0)
+            {
+                if(message.request.headers.Any(hdr=> hdr.Key.ToLower().Equals("soapaction")))
+                {
+                    var action =  message.request.headers.FirstOrDefault(hdr=> hdr.Key.ToLower().Equals("soapaction")).Value;
+                    action = action.Replace("\"", "");
+                    if(!string.IsNullOrEmpty(action)) return message.service_component + "-" + action;
+                    else return message.service_component + "-" + GetElementName(message.request.raw_data);
+                }
+
+                var method = "";
+                message.request.headers.TryGetValue("Method",out method);
+
+                return message.service_component +"-" + method;
+
+            }
 
             return message.service_component;
         }
