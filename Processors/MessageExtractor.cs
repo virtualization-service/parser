@@ -75,22 +75,22 @@ namespace Parser.Processors
         {
             var headerComponent = string.Empty;
 
-            if(message.request?.headers?.Count > 0)
-            {
-                if(message.request.headers.Any(hdr=> hdr.Key.ToLower().Equals("soapaction")))
-                {
-                    var action =  message.request.headers.FirstOrDefault(hdr=> hdr.Key.ToLower().Equals("soapaction")).Value;
-                    action = action.Replace("\"", "");
-                    if(!string.IsNullOrEmpty(action)) return message.service_component + "-" + action;
-                    else return message.service_component + "-" + GetElementName(message.request.raw_data);
-                }
+            if(message?.protocol == "soap"){
 
-                var method = "";
-                message.request.headers.TryGetValue("Method",out method);
+                var action =  message?.soapaction;
+                action = action.Replace("\"", "");
 
-                return message.service_component +"-" + method;
+                if(!string.IsNullOrEmpty(action)) return message.service_component + "-" + action;
 
+                else return message.service_component + "-" + GetElementName(message.request.raw_data);
             }
+
+            if(message?.protocol == "rest"){
+
+                return message.service_component +"-" + message?.method;
+                
+            }
+
             return message.service_component;
         }
     

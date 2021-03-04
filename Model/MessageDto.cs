@@ -8,6 +8,18 @@ namespace Parser.Model
     {
         public Uri service{ get; set;}
 
+        public string protocol{ get; set;}
+
+        public string soapaction{ get; set;}
+
+        public string authenticationMethod{ get; set;}
+
+        public string authenticationKey{ get; set;}
+
+        public string authenticationValue{ get; set;}
+
+        public string method{ get; set;}
+
         public string operation{ get; set;}
 
         public Body request{ get; set;}
