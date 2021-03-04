@@ -23,7 +23,7 @@ namespace Parser.Processors
             if( !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RABBIT_MQ_URI") ))
                 factory.Uri = new Uri(Environment.GetEnvironmentVariable("RABBIT_MQ_URI"));
 
-            Console.WriteLine($"Connection to RabbitMQ ${ factory.Uri}");
+            Console.WriteLine($"Connection to RabbitMQ  V 222 - ${ factory.Uri}");
             _channel = connection.CreateModel();
 
             _channel.ExchangeDeclare("configuration", type: "topic", durable: true);
