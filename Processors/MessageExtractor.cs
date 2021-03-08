@@ -86,9 +86,7 @@ namespace Parser.Processors
             }
 
             if(message?.protocol == "rest"){
-
                 return message.service_component +"-" + message?.method;
-                
             }
             
             if(message.request?.headers?.Count > 0)
